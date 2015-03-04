@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
@@ -32,7 +33,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
+    private FrameLayout mFrameL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +47,25 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        mFrameL = (FrameLayout)findViewById(R.id.container);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, PlaceholderFragment.newInstance(3 + 1))
+                .commit();
+
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .commit();
+
+        TextView t = (TextView) findViewById(R.id.section_label);
+        t.setText("amamlakml");
     }
 
     public void onSectionAttached(int number) {
@@ -70,12 +81,7 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
 
-        boolean hayDetalle = (getSupportFragmentManager().findFragmentById(R.id.fragmentMain) != null);
 
-        if(hayDetalle) {
-            ((MainFragment)getSupportFragmentManager()
-                    .findFragmentById(R.id.fragmentMain)).mostrarDetalle("Prueba");
-        }
 
     }
 
