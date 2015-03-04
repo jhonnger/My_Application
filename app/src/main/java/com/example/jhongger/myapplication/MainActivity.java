@@ -48,12 +48,6 @@ public class MainActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        mFrameL = (FrameLayout)findViewById(R.id.container);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(3 + 1))
-                .commit();
-
     }
 
     @Override
@@ -63,9 +57,6 @@ public class MainActivity extends ActionBarActivity
             fragmentManager.beginTransaction()
                     .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                     .commit();
-
-        TextView t = (TextView) findViewById(R.id.section_label);
-        t.setText("amamlakml");
     }
 
     public void onSectionAttached(int number) {
@@ -151,6 +142,11 @@ public class MainActivity extends ActionBarActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            if (getArguments() != null){
+                int pos = getArguments().getInt(ARG_SECTION_NUMBER, 1);
+                ((TextView)rootView.findViewById(R.id.section_label)).setText("asmdlasd, pos: " + pos);
+            }
             return rootView;
         }
 
